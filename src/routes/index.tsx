@@ -82,7 +82,16 @@ function Deck() {
       </header>
 
       <section key={index} className={`deck-stage ${dir > 0 ? "from-right" : "from-left"}`}>
-        {isTitle ? (
+        {index === total - 1 ? (
+          <div className="deck-hero">
+            <div className="alien" aria-hidden>
+              <div className="alien-beam" />
+              <div className="alien-ship"><div className="alien-dome"><div className="alien-face"><i /><i /></div></div><div className="alien-saucer"><b /><b /><b /><b /><b /></div></div>
+              <div className="alien-stars">{Array.from({ length: 24 }, (_, i) => <span key={i} style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, animationDelay: `${(i % 7) * 0.4}s` }} />)}</div>
+            </div>
+            <h1 className="deck-title-lg alien-title">{s.title}</h1>
+          </div>
+        ) : isTitle ? (
           <div className="deck-hero">
             <div className="deck-digits" aria-hidden>
               <span>5</span><span>.</span><span>7</span><span>3</span><span className="deck-digit-new">1</span>
