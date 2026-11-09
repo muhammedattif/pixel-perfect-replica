@@ -1,5 +1,7 @@
+import type { VisualKey } from "@/components/deck/Visuals";
+
 export type Block = { heading?: string; items: string[] };
-export type Slide = { kicker: string; title: string; subtitle?: string; blocks: Block[] };
+export type Slide = { kicker: string; title: string; subtitle?: string; blocks: Block[]; visual?: VisualKey };
 
 export const slides: Slide[] = [
   {
@@ -10,6 +12,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "The problem",
+    visual: "problem",
     title: "The problem",
     blocks: [
       {
@@ -24,6 +27,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "Constraints",
+    visual: "constraints",
     title: "Constraints",
     blocks: [
       {
@@ -70,6 +74,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "What we shipped",
+    visual: "shipped",
     title: "What we shipped",
     blocks: [
       {
@@ -87,6 +92,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "Where it lives, and the one flag",
+    visual: "flag",
     title: "Where it lives, and the one flag",
     blocks: [
       {
@@ -111,6 +117,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "How a value moves",
+    visual: "flow",
     title: "How a value moves",
     blocks: [
       {
@@ -129,6 +136,7 @@ export const slides: Slide[] = [
   },
   {
     kicker: "What we faced",
+    visual: "faced",
     title: "What we faced",
     blocks: [
       {
