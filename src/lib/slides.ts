@@ -168,4 +168,9 @@ export const slides: Slide[] = [
       },
     ],
   },
+  {
+    kicker: "Questions",
+    title: "Any questions?",
+    blocks: [],
+  },
 ];
