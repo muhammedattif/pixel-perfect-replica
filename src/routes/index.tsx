@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { slides } from "@/lib/slides";
+import { SlideVisual, TitleStickers, stampFor } from "@/components/deck/Visuals";
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>) => ({ slide: Number(s["slide"]) || undefined }) as { slide?: number },
@@ -93,6 +94,7 @@ function Deck() {
           </div>
         ) : isTitle ? (
           <div className="deck-hero">
+            <TitleStickers />
             <div className="deck-digits" aria-hidden>
               <span>5</span><span>.</span><span>7</span><span>3</span><span className="deck-digit-new">1</span>
             </div>
@@ -105,9 +107,14 @@ function Deck() {
               <span className="deck-kicker-num">{String(index + 1).padStart(2, "0")}</span> {s.kicker}
             </p>
             <h2 className="deck-title">{s.title}</h2>
-            <div className={`deck-blocks ${s.blocks.length > 1 ? "multi" : ""} ${s.blocks.length > 2 ? "tri" : ""}`}>
-              {s.blocks.map((b, bi) => (
-                <div key={bi} className={`deck-block ${b.heading?.includes("shipped") ? "is-shipped" : ""}`} style={{ animationDelay: `${150 + bi * 120}ms` }}>
+            <div
+              className={`deck-blocks ${s.blocks.length > 1 ? "multi" : ""} ${s.blocks.length + (s.visual && s.blocks.length > 1 ? 1 : 0) > 2 ? "tri" : ""} ${s.visual && s.blocks.length === 1 ? "split" : ""}`}
+            >
+              {s.blocks.map((b, bi) => {
+                const stamp = stampFor(b.heading);
+                return (
+                <div key={bi} className={`deck-block ${b.heading?.includes("shipped") ? "is-shipped" : ""} ${stamp ? "has-stamp" : ""}`} style={{ animationDelay: `${150 + bi * 120}ms` }}>
+                  {stamp && <span className={`stamp stamp-${stamp.tone}`}>{stamp.label}</span>}
                   {b.heading && <h3 className="deck-block-head">{rich(b.heading)}</h3>}
                   <ul className="deck-list">
                     {b.items.map((it, ii) => (
@@ -117,7 +124,13 @@ function Deck() {
                     ))}
                   </ul>
                 </div>
-              ))}
+                );
+              })}
+              {s.visual && (
+                <div className="deck-visual" style={{ animationDelay: `${200 + s.blocks.length * 120}ms` }}>
+                  <SlideVisual kind={s.visual} />
+                </div>
+              )}
             </div>
           </div>
         )}
