@@ -361,3 +361,9 @@
 .float-sticker:nth-child(4) { background: var(--deck-accent); box-shadow: 0 0 0 3px var(--deck-accent), 0 16px 30px -10px oklch(0 0 0 / 0.7); }
 @keyframes float-bob { 50% { translate: 0 -14px; } }
 @media (max-width: 700px) { .title-stickers { display: none; } .vz-stickers { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) {
+  .vz-conv-row { grid-template-columns: 38px 52px 40px 14px 1fr; gap: 6px; font-size: 13px; }
+  .vz-digits i { width: 24px; height: 30px; }
+  .vz-col { flex-wrap: wrap; }
+  .vz-faced { grid-template-columns: 1fr; }
+}
