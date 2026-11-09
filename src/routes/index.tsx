@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } fr
 import { slides } from "@/lib/slides";
 
 export const Route = createFileRoute("/")({
-  validateSearch: (s: Record<string, unknown>) => ({ slide: Number(s.slide) || 1 }),
+  validateSearch: (s: Record<string, unknown>) => ({ slide: Number(s["slide"]) || undefined }) as { slide?: number },
   head: () => ({
     meta: [
       { title: "Supporting 3-decimal currencies" },
@@ -24,7 +24,7 @@ function rich(text: string): ReactNode {
 }
 
 function Deck() {
-  const { slide } = Route.useSearch();
+  const { slide = 1 } = Route.useSearch();
   const navigate = Route.useNavigate();
   const total = slides.length;
   const index = Math.min(Math.max(slide, 1), total) - 1;
@@ -53,20 +53,20 @@ function Deck() {
   }, [go, index, total]);
 
   useEffect(() => {
-    document.title = `${index + 1}/${total} — ${slides[index].title}`;
+    document.title = `${index + 1}/${total} — ${slides[index]!.title}`;
   }, [index, total]);
 
-  const s = slides[index];
+  const s = slides[index]!;
   const isTitle = index === 0;
   let n = 0;
 
   return (
     <main
       className="deck"
-      onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
+      onTouchStart={(e) => (touch.current = e.touches[0]!.clientX)}
       onTouchEnd={(e) => {
         if (touch.current === null) return;
-        const dx = e.changedTouches[0].clientX - touch.current;
+        const dx = e.changedTouches[0]!.clientX - touch.current;
         if (Math.abs(dx) > 50) go(index + (dx < 0 ? 1 : -1));
         touch.current = null;
       }}
